@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from model import train_models
 from utils import get_grade
@@ -45,4 +46,14 @@ if st.sidebar.button("Predict"):
     st.line_chart(chart_df)
 
     st.subheader("🥧 Contribution Distribution")
-    st.pyplot(chart_df.plot.pie(y="Value", autopct='%1.1f%%').figure)
+    fig, ax = plt.subplots(figsize=(6, 6))  # Increase chart size
+    ax.pie(
+    values,
+    labels=labels,
+    autopct='%1.1f%%',
+    startangle=90,          # Rotate chart for better spacing
+    pctdistance=0.75,       # Move percentage inside
+    labeldistance=1.1       # Move labels slightly outside
+    )
+    ax.set_title("Contribution Distribution")
+    st.pyplot(fig)
